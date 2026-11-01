@@ -1,129 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Safar AI</title>
-
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripMate AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
+  <!-- decorative background -->
+  <div class="page-bg">
+    <div class="gradient-circle circle-1"></div>
+    <div class="gradient-circle circle-2"></div>
+    <div class="gradient-circle circle-3"></div>
+    <span class="float f1">☁️</span>
+    <span class="float f2">🌴</span>
+    <span class="float f3">🧳</span>
+    <span class="float f4">🗺️</span>
+    <span class="float f5">📍</span>
+  </div>
 
-    <div class="page-bg">
-        <div class="gradient-circle circle-1"></div>
-        <div class="gradient-circle circle-2"></div>
-        <div class="gradient-circle circle-3"></div>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="logo">
+        <span class="logo-pin">📍</span>
+        <span>TripMate<span class="logo-ai">.ai</span></span>
+      </div>
+      <div class="nav-right">
+        <span class="nav-code">v1.0.0</span>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Online
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-container">
+    <section class="hero-section">
+      <div class="hero-text">
+        <div class="badge">
+          ✈️ TripMate AI — LangGraph, MCP, Supervisor, Guardrails &amp; HITL
+        </div>
+        <h1>
+          Plan Your <span class="hl hl-yellow">Perfect Trip</span> with <span class="hl hl-pink">AI</span>
+        </h1>
+        <p>
+          Search flights, discover hotels, check weather, assess your budget,
+          and review the AI-generated draft before the final itinerary is created.
+        </p>
+        <div class="hero-tags">
+          <span>#flights</span><span>#hotels</span><span>#weather</span><span>#budget</span>
+        </div>
+      </div>
+
+      <div class="code-window" aria-hidden="true">
+        <div class="code-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="code-file">my_trip.js</span>
+        </div>
+        <pre class="code-body"><span class="c-com">// let the agents do the boring part</span>
+<span class="c-key">const</span> trip = <span class="c-key">await</span> <span class="c-fn">tripMate</span>.<span class="c-fn">plan</span>({
+  to:     <span class="c-str">"Japan"</span>,
+  days:   <span class="c-num">7</span>,
+  budget: <span class="c-str">"₹2 lakh"</span>,
+  vibe:   <span class="c-str">"ramen + temples"</span>
+});
+
+<span class="c-com">// ✈️ flights ✓  🏨 hotels ✓  🌦️ weather ✓</span>
+<span class="c-fn">console</span>.<span class="c-fn">log</span>(trip.<span class="c-prop">status</span>); <span class="c-com">// "pack your bags 🎒"</span></pre>
+        <span class="sticker sticker-1">no bugs, only layovers 🛫</span>
+        <span class="sticker sticker-2">works on my trip ✅</span>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>TOKYO</span><span>✦</span><span>DUBAI</span><span>✦</span><span>BANGKOK</span><span>✦</span><span>PARIS</span><span>✦</span><span>BALI</span><span>✦</span><span>SINGAPORE</span><span>✦</span><span>ISTANBUL</span><span>✦</span>
+        <span>TOKYO</span><span>✦</span><span>DUBAI</span><span>✦</span><span>BANGKOK</span><span>✦</span><span>PARIS</span><span>✦</span><span>BALI</span><span>✦</span><span>SINGAPORE</span><span>✦</span><span>ISTANBUL</span><span>✦</span>
+      </div>
     </div>
 
-    <main class="app-container">
+    <section class="planner-card">
+      <div class="card-header">
+        <div>
+          <span class="step-tag">step_01</span>
+          <h2>Where do you want to go? 🌍</h2>
+          <p>
+            Example: Plan a complete 7 days Japan trip from Bangladesh under 2 lakhs.
+          </p>
+        </div>
+      </div>
 
-        <section class="hero-section">
-            <div class="badge">
-                ✈️ Safar AI — A Multi-Agent Travel Planner with LangGraph
-            </div>
+      <div class="input-area">
+        <textarea
+          id="userInput"
+          placeholder="Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs..."
+        ></textarea>
+        <button id="sendBtn" onclick="sendMessage()">
+          <span id="btnText">Generate Draft 🚀</span>
+          <span id="btnLoader" class="loader hidden"></span>
+        </button>
+      </div>
 
-            <h1>
-                Plan Your Perfect Trip with AI
-            </h1>
+      <div class="quick-label">// or pick a destination</div>
+      <div class="quick-prompts">
+        <button class="q-yellow" onclick="setPrompt('Plan a complete 7 days Japan trip from Bangladesh including flights, hotels and sightseeing under 2 lakhs.')">
+          🗾 Japan Trip
+        </button>
+        <button class="q-pink" onclick="setPrompt('Plan a 5 days Dubai trip from Dhaka with flights, hotels and sightseeing.')">
+          🏙️ Dubai Trip
+        </button>
+        <button class="q-mint" onclick="setPrompt('Plan a 7 days Thailand trip from Bangladesh with budget hotels and sightseeing.')">
+          🏝️ Thailand Trip
+        </button>
+        <button class="q-sky" onclick="setPrompt('Give me all country flight info.')">
+          🌐 Global Flights
+        </button>
+      </div>
+      <div class="kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run</div>
+    </section>
 
-            <p>
-                Search flights, discover hotels, and generate a complete travel itinerary using a multi-agent LangGraph system.
-            </p>
-        </section>
+    <section id="workflowSection" class="workflow-section hidden">
+      <div class="workflow-header">
+        <div>
+          <span class="eyebrow">Supervisor Agent</span>
+          <h2>Execution Plan 🧠</h2>
+        </div>
+        <span id="guardrailBadge" class="guardrail-badge">Guardrail passed</span>
+      </div>
+      <p id="supervisorReasoning" class="supervisor-reasoning"></p>
+      <div class="pipeline-label">// agents.run()</div>
+      <div id="agentChips" class="agent-chips"></div>
+    </section>
 
-        <section class="planner-card">
+    <section id="resultSection" class="result-section hidden">
+      <div class="result-header">
+        <div>
+          <span class="eyebrow">Your boarding pass 🎫</span>
+          <h2 id="resultTitle">Your AI Travel Plan</h2>
+          <p id="threadInfo">Thread ID: -</p>
+        </div>
+        <div class="result-actions">
+          <button class="copy-btn" onclick="copyResult()">Copy</button>
+          <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+        </div>
+      </div>
 
-            <div class="card-header">
-                <div>
-                    <h2>Where do you want to go?</h2>
-                    <p>
-                        Example: Plan a complete 7 days Japan trip from Bangladesh under 2 lakhs.
-                    </p>
-                </div>
+      <div id="pdfContent" class="pdf-content">
+        <h1 class="pdf-title">AI Travel Plan</h1>
+        <div id="resultBox" class="result-box"></div>
+      </div>
+    </section>
 
-                <div class="status-pill">
-                    <span class="status-dot"></span>
-                    Online
-                </div>
-            </div>
+    <section id="approvalSection" class="approval-section hidden">
+      <div class="approval-icon">👤</div>
+      <div class="approval-content">
+        <span class="eyebrow">Human-in-the-Loop · code review</span>
+        <h2>Review the draft itinerary</h2>
+        <p id="approvalRequest">
+          Approve the draft or provide feedback before the final plan is generated.
+        </p>
 
-            <div class="input-area">
-                <textarea
-                    id="userInput"
-                    placeholder="Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs..."
-                ></textarea>
+        <textarea
+          id="approvalFeedback"
+          class="feedback-input"
+          placeholder="Add revision feedback, for example: reduce the hotel cost and add one free day..."
+        ></textarea>
 
-                <button id="sendBtn" onclick="sendMessage()">
-                    <span id="btnText">Generate Plan</span>
-                    <span id="btnLoader" class="loader hidden"></span>
-                </button>
-            </div>
+        <div class="approval-actions">
+          <button id="approveBtn" class="approve-btn" onclick="submitApproval(true)">
+            Approve &amp; Generate Final
+          </button>
+          <button id="reviseBtn" class="revise-btn" onclick="submitApproval(false)">
+            Revise Using Feedback
+          </button>
+        </div>
+      </div>
+    </section>
 
-            <div class="quick-prompts">
-                <button onclick="setPrompt('Plan a complete 7 days Japan trip from Bangladesh including flights, hotels and sightseeing under 2 lakhs.')">
-                    Japan Trip
-                </button>
+    <section id="errorBox" class="error-box hidden"></section>
+  </main>
 
-                <button onclick="setPrompt('Plan a 5 days Dubai trip from Dhaka with flights, hotels and sightseeing.')">
-                    Dubai Trip
-                </button>
+  <footer>
+    Built with FastAPI, LangGraph, Groq, PostgreSQL, Tavily, AviationStack and MCP
+    <div class="footer-code">// made for travellers who code ☕</div>
+  </footer>
 
-                <button onclick="setPrompt('Plan a 7 days Thailand trip from Bangladesh with budget hotels and sightseeing.')">
-                    Thailand Trip
-                </button>
-
-                <button onclick="setPrompt('Give me all country flight info.')">
-                    Global Flights
-                </button>
-            </div>
-
-        </section>
-
-        <section id="resultSection" class="result-section hidden">
-
-            <div class="result-header">
-                <div>
-                    <h2>Your AI Travel Plan</h2>
-                    <p id="threadInfo">Thread ID: -</p>
-                </div>
-
-                <div class="result-actions">
-                    <button class="copy-btn" onclick="copyResult()">
-                        Copy
-                    </button>
-
-                    <button class="download-btn" onclick="downloadPDF()">
-                        Download PDF
-                    </button>
-                </div>
-            </div>
-
-            <div id="pdfContent" class="pdf-content">
-                <h1 class="pdf-title">AI Travel Plan</h1>
-                <div id="resultBox" class="result-box"></div>
-            </div>
-
-        </section>
-
-        <section id="errorBox" class="error-box hidden"></section>
-
-    </main>
-
-    <footer>
-        Built with FastAPI, LangGraph, Groq, PostgreSQL, Tavily and AviationStack
-    </footer>
-
-    <!-- Markdown Renderer -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <!-- PDF Download Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <!-- Your Custom JS -->
-    <script src="/static/script.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="/static/script.js"></script>
 </body>
 </html>
