@@ -1,7 +1,8 @@
-# Environments
-.venv
-env/
+.travel/
+.venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
+__pycache__/
+*.pyc
+.git/
+.env
+.env.*
